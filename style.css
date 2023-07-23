@@ -15,7 +15,7 @@ body{
     justify-content: center;
     min-height: 100vh;
     padding: 0 10px;
-    background-image: url(./img/christine-roy-ir5MHI6rPg0-unsplash.jpg);
+    background-image: url(./assets/img/christine-roy-ir5MHI6rPg0-unsplash.jpg);
       /* Faz com que a imagem cubra toda a área disponível sem distorção */
   background-size: cover;
 
