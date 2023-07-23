@@ -45,10 +45,45 @@ getBtn.addEventListener("click", (e) => {
 
 exIcon.addEventListener("click", () => {
     [fromCur.value, toCur.value] = [toCur.value, fromCur.value];
+    updateFlagImagesAndExchangeRate();
+});
+
+// Function to update flag images and get the exchange rate
+function updateFlagImagesAndExchangeRate() {
     [fromCur, toCur].forEach((select) => {
         const code = select.value;
         const imgTag = select.parentElement.querySelector("img");
         imgTag.src = `https://flagcdn.com/48x36/${Country_List[code].toLowerCase()}.png`;
     });
     getExchangeRate();
-});
+}
+
+// Function to filter currencies based on input letter
+function filterCurrencies() {
+    const letter = currencyInput.value.trim().toUpperCase();
+
+    // Filter options based on the input letter
+    const filteredOptionsFrom = Object.keys(Country_List).filter(curCode => curCode.includes(letter));
+    const filteredOptionsTo = Object.keys(Country_List).filter(curCode => curCode.includes(letter));
+
+    // Clear the dropdown options
+    fromCur.innerHTML = "";
+    toCur.innerHTML = "";
+
+    // Re-populate the dropdown options with the filtered currencies
+    filteredOptionsFrom.forEach(curCode => {
+        const selected = curCode === fromCur.value ? "selected" : "";
+        fromCur.insertAdjacentHTML("beforeend", `<option value="${curCode}" ${selected}>${curCode}</option>`);
+    });
+
+    filteredOptionsTo.forEach(curCode => {
+        const selected = curCode === toCur.value ? "selected" : "";
+        toCur.insertAdjacentHTML("beforeend", `<option value="${curCode}" ${selected}>${curCode}</option>`);
+    });
+
+    // Update the flag images and get the new exchange rate
+    updateFlagImagesAndExchangeRate();
+}
+
+const currencyInput = document.querySelector("form input");
+currencyInput.addEventListener("input", filterCurrencies);
